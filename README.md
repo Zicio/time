@@ -1,6 +1,8 @@
+[![Build status](https://ci.appveyor.com/api/projects/status/540xi88n99u4ebvp?svg=true)](https://ci.appveyor.com/project/Zicio/time)
+
 [Ссылка на GP](https://zicio.github.io/time/)
 
-[Ссылка на задание](https://github.com/netology-code/ra16-homeworks/tree/master/events-state/filter)
+[Ссылка на задание](https://github.com/Zicio/ra16-homeworks/tree/master/hoc/time)
 
 # Getting Started with Create React App
 

@@ -1,22 +1,36 @@
+/* eslint-disable no-unused-vars */
 /* eslint-disable jsx-a11y/iframe-has-title */
 import React, { useState } from "react";
 import moment from "moment";
 import "moment/locale/ru";
 
 function DateTime(props) {
-  const date = props.date;
-  const now = moment();
-  console.log(moment(props.date, "YYYY-MM-DD h:mm:ss").fromNow());
   return <p className="date">{props.date}</p>;
 }
 
-// const DateTimePretty = (Component) => {
-//   return class extends React.Component {
-//     render() {
-//       return <Component {...this.props} />;
-//     }
-//   };
-// };
+const withPretty = (Component, propName) => {
+  return class extends React.Component {
+    render() {
+      const date = moment(this.props.date);
+      const dateNow = moment();
+      const differenceHours = dateNow.diff(date, "hour");
+      const differenceDays = dateNow.diff(date, "days");
+      const props = { [propName]: null };
+      if (differenceHours < 1) {
+        props[propName] = "12 минут назад";
+      } else if (differenceHours > 24 && /.*[2-4]$/m.test(differenceDays)) {
+        props[propName] = `${dateNow.diff(date, "days")} дня назад`;
+      } else if (differenceHours > 24) {
+        props[propName] = `${dateNow.diff(date, "days")} дней назад`;
+      } else {
+        props[propName] = "5 часов назад";
+      }
+      return <Component {...this.props} {...props} />;
+    }
+  };
+};
+
+const DateTimePretty = withPretty(DateTime, "date");
 
 function Video(props) {
   return (
@@ -27,7 +41,7 @@ function Video(props) {
         allow="autoplay; encrypted-media"
         allowfullscreen
       ></iframe>
-      <DateTime date={props.date} />
+      <DateTimePretty date={props.date} />
     </div>
   );
 }
@@ -58,17 +72,17 @@ export default function App() {
     {
       id: 4,
       url: "https://www.youtube.com/embed/RK1K2bCg4J8?rel=0&amp;controls=0&amp;showinfo=0",
-      date: "2018-01-03 12:10:00",
+      date: "2022-05-22 12:10:00",
     },
     {
       id: 5,
       url: "https://www.youtube.com/embed/TKmGU77INaM?rel=0&amp;controls=0&amp;showinfo=0",
-      date: "2018-01-01 16:17:00",
+      date: "2022-05-24 21:20:00",
     },
     {
       id: 6,
       url: "https://www.youtube.com/embed/TxbE79-1OSI?rel=0&amp;controls=0&amp;showinfo=0",
-      date: "2017-12-02 05:24:00",
+      date: "2022-05-24 18:24:00",
     },
   ]);
 
